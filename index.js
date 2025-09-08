@@ -19,10 +19,9 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 app.get("/api/whoami", (req, res) => {
-  const ipaddress = "162.158.63.103";
-  const language = "en-US,en;q=0.9";
-  const software =
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36 Edg/140.0.0.0";
+  const ipaddress = req.ip || req.headers["x-forwarded-for"];
+  const language = req.headers["accept-language"];
+  const software = req.headers["user-agent"];
   res.json({ ipaddress: ipaddress, language: language, software: software });
 });
 
